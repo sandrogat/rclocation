@@ -46,7 +46,7 @@
     <div class="container">
         <div class="header">
             <h1>Modellflugplatz Datenbank</h1>
-            <p>Finde den perfekten Flugplatz für die aktuelle Windrichtung</p>
+            <p>Finde den perfekten Flugplatz für deine Windrichtung</p>
         </div>
 
         <div class="controls">
@@ -85,6 +85,8 @@
             <input type="url" id="location">
             <label>Parkplatz URL</label>
             <input type="url" id="parking">
+            <label>Lokales Wetter URL</label>
+            <input type="url" id="weather" placeholder="z.B. Windy.com oder Windfinder Link">
             <label>Windrichtungen *</label>
             <div class="wind-buttons" id="windBtns"></div>
             <label>Anmerkungen</label>
@@ -100,19 +102,19 @@
 
     <script>
     var data = [
-        {name:"Braunsberg",location:"https://goo.gl/maps/4f7vP8n8RHQxm6Yj8",parking:"https://goo.gl/maps/4f7vP8n8RHQxm6Yj8",notes:"",photo:"https://www.sdetmi.com/assets/Uploads/Event/23385/_resampled/CroppedFocusedImageWzcwMCwzMDAsInkiLDBd/P1140303.JPG",wind:["N","SO","S","SW","W","NW"],id:"1"},
-        {name:"Winden am See",location:"https://goo.gl/maps/zeA62LLuq1FoFJS4A",parking:"https://maps.app.goo.gl/K4PtfT9Hi8Wmix2Y9",notes:"",photo:"https://media.gettyimages.com/id/996196320/photo/townscape-winden-am-see-lake-neusiedl-northern-burgenland-burgenland-austria.jpg?s=1024x1024&w=gi&k=20&c=6rm9XQUfKbNsEVLNNaVKjcHP4DVquuQRL16s3QpNq8M=",wind:["SO","S"],id:"2"},
-        {name:"Gebmanns",location:"https://goo.gl/maps/gAT-KtEBL7hGMNeRdgQ7",parking:"https://goo.gl/maps/gAT-KtEBL7hGMNeRdgQ7",notes:"",photo:"https://de-academic.com/pictures/dewiki/67/Castle_Ernstbrunn_01_2008.JPG",wind:["N","SO"],id:"3"},
-        {name:"Göllersdorf",location:"https://maps.app.goo.gl/axGbCxSurBzS4jfg8",parking:"https://maps.app.goo.gl/axGbCxSurBzS4jfg8",notes:"",photo:"https://img2.oastatic.com/img2/21643708/max/variant.jpg",wind:["SW","W"],id:"4"},
-        {name:"Oberleis",location:"https://goo.gl/maps/CaoWcceuov2oWLsAA",parking:"https://goo.gl/maps/3QtNnh3eD5C3uYZT9",notes:"",photo:"https://vcdn.bergfex.at/images/resized/profiles/detail/0e7/63d309a74400ffac79c23f8d591b60e7.jpg?1653949197",wind:["SO","S"],id:"5"},
-        {name:"Waschberg",location:"https://goo.gl/maps/TsDnriEBFTmCrSSr7",parking:"https://goo.gl/maps/vJWyfFENdCjyB8WTA",notes:"",photo:"https://vcdn.bergfex.at/images/resized/ec/61609ebf726526ec_4cc9ea95bbcd4772.jpg",wind:["SW","W"],id:"6"},
-        {name:"Hundsheimer Berg",location:"https://goo.gl/maps/2REqQRvRTdtcBMm37",parking:"https://goo.gl/maps/8j1PcnwmriDE9qAT-K27",notes:"",photo:"https://www.naturland-noe.at/bild.php?id=989&size=gr",wind:["SO","S","SW"],id:"7"},
-        {name:"Spitzerberg",location:"https://goo.gl/maps/AGjLCtPAT-Kyqt7hWTH7",parking:"https://goo.gl/maps/AGjLCtPAT-Kyqt7hWTH7",notes:"",photo:"https://media04.meinbezirk.at/article/2016/06/29/2/4563752_XXL.jpg",wind:["N","SO","S","SW","W","NW"],id:"8"},
-        {name:"Hackbichl",location:"https://goo.gl/maps/B1m1gA4ydQ6RCEeLA",parking:"https://goo.gl/maps/B1m1gA4ydQ6RCEeLA",notes:"",photo:"https://www.gps-tour.info/redx/tools/mb_image.php/ct.VZO2zQ/gid.8/file.zY2JjEFA2xSCHx7E1twm3Q_2vFBRO8ZEuG8acDkue4kbi8kOz6s6sbHJtGq76IvE0z0JuN-09vnSmAwTM91gD2y8U9GNiYw/IMG_8002_b.JPG",wind:["N","NO","O","SO","S","SW"],id:"9"},
-        {name:"Sommeralm",location:"https://goo.gl/maps/EAT-KxAT-KMDJdjzoAT-K1vBc6",parking:"https://goo.gl/maps/L8AgwhAvgq6228ah8",notes:"",photo:"https://vcdn.bergfex.at/images/resized/43/0f0dd5c588fbc143_1e58547d0551d0b5.jpg",wind:["N","NO","SO","S","SW","W","NW"],id:"10"},
-        {name:"Stuhleck",location:"https://goo.gl/maps/X2bncUd8174GHreN7",parking:"https://goo.gl/maps/X2bncUd8174GHreN7",notes:"",photo:"https://hautzendorfer.lima-city.de/Stuhleck/images/IMG_9879.jpg",wind:["SO","S","SW"],id:"11"},
-        {name:"Wiener Hütte",location:"https://maps.app.goo.gl/51FdukWReyfFydhi8",parking:"https://maps.app.goo.gl/igriU9PuRYUUj8ER9",notes:"",photo:"https://vcdn.bergfex.at/images/resized/profiles/detail/461/4b82ad98bcd35379750d3a0b288fb461.jpg?1620128313",wind:["N","NO","O"],id:"12"},
-        {name:"Tulbing",location:"https://goo.gl/maps/voDebAT-KWoYissaAES9",parking:"https://goo.gl/maps/6TMHHuzNWjHHszDv5",notes:"Betrieb unter der Woche ab 16h, Di verboten, ab Fr 14h",photo:"http://www.tulbingerkogel.at/wp-content/uploads/2018/10/outdoor_site.jpg",wind:["N","NO","NW"],id:"13"}
+        {name:"Braunsberg",location:"https://goo.gl/maps/4f7vP8n8RHQxm6Yj8",parking:"https://goo.gl/maps/4f7vP8n8RHQxm6Yj8",weather:"",notes:"",photo:"https://www.sdetmi.com/assets/Uploads/Event/23385/_resampled/CroppedFocusedImageWzcwMCwzMDAsInkiLDBd/P1140303.JPG",wind:["N","SO","S","SW","W","NW"],id:"1"},
+        {name:"Winden am See",location:"https://goo.gl/maps/zeA62LLuq1FoFJS4A",parking:"https://maps.app.goo.gl/K4PtfT9Hi8Wmix2Y9",weather:"",notes:"",photo:"https://media.gettyimages.com/id/996196320/photo/townscape-winden-am-see-lake-neusiedl-northern-burgenland-burgenland-austria.jpg?s=1024x1024&w=gi&k=20&c=6rm9XQUfKbNsEVLNNaVKjcHP4DVquuQRL16s3QpNq8M=",wind:["SO","S"],id:"2"},
+        {name:"Gebmanns",location:"https://goo.gl/maps/gAT-KtEBL7hGMNeRdgQ7",parking:"https://goo.gl/maps/gAT-KtEBL7hGMNeRdgQ7",weather:"",notes:"",photo:"https://de-academic.com/pictures/dewiki/67/Castle_Ernstbrunn_01_2008.JPG",wind:["N","SO"],id:"3"},
+        {name:"Göllersdorf",location:"https://maps.app.goo.gl/axGbCxSurBzS4jfg8",parking:"https://maps.app.goo.gl/axGbCxSurBzS4jfg8",weather:"",notes:"",photo:"https://img2.oastatic.com/img2/21643708/max/variant.jpg",wind:["SW","W"],id:"4"},
+        {name:"Oberleis",location:"https://goo.gl/maps/CaoWcceuov2oWLsAA",parking:"https://goo.gl/maps/3QtNnh3eD5C3uYZT9",weather:"",notes:"",photo:"https://vcdn.bergfex.at/images/resized/profiles/detail/0e7/63d309a74400ffac79c23f8d591b60e7.jpg?1653949197",wind:["SO","S"],id:"5"},
+        {name:"Waschberg",location:"https://goo.gl/maps/TsDnriEBFTmCrSSr7",parking:"https://goo.gl/maps/vJWyfFENdCjyB8WTA",weather:"",notes:"",photo:"https://vcdn.bergfex.at/images/resized/ec/61609ebf726526ec_4cc9ea95bbcd4772.jpg",wind:["SW","W"],id:"6"},
+        {name:"Hundsheimer Berg",location:"https://goo.gl/maps/2REqQRvRTdtcBMm37",parking:"https://goo.gl/maps/8j1PcnwmriDE9qAT-K27",weather:"",notes:"",photo:"https://www.naturland-noe.at/bild.php?id=989&size=gr",wind:["SO","S","SW"],id:"7"},
+        {name:"Spitzerberg",location:"https://goo.gl/maps/AGjLCtPAT-Kyqt7hWTH7",parking:"https://goo.gl/maps/AGjLCtPAT-Kyqt7hWTH7",weather:"",notes:"",photo:"https://media04.meinbezirk.at/article/2016/06/29/2/4563752_XXL.jpg",wind:["N","SO","S","SW","W","NW"],id:"8"},
+        {name:"Hackbichl",location:"https://goo.gl/maps/B1m1gA4ydQ6RCEeLA",parking:"https://goo.gl/maps/B1m1gA4ydQ6RCEeLA",weather:"",notes:"",photo:"https://www.gps-tour.info/redx/tools/mb_image.php/ct.VZO2zQ/gid.8/file.zY2JjEFA2xSCHx7E1twm3Q_2vFBRO8ZEuG8acDkue4kbi8kOz6s6sbHJtGq76IvE0z0JuN-09vnSmAwTM91gD2y8U9GNiYw/IMG_8002_b.JPG",wind:["N","NO","O","SO","S","SW"],id:"9"},
+        {name:"Sommeralm",location:"https://goo.gl/maps/EAT-KxAT-KMDJdjzoAT-K1vBc6",parking:"https://goo.gl/maps/L8AgwhAvgq6228ah8",weather:"",notes:"",photo:"https://vcdn.bergfex.at/images/resized/43/0f0dd5c588fbc143_1e58547d0551d0b5.jpg",wind:["N","NO","SO","S","SW","W","NW"],id:"10"},
+        {name:"Stuhleck",location:"https://goo.gl/maps/X2bncUd8174GHreN7",parking:"https://goo.gl/maps/X2bncUd8174GHreN7",weather:"",notes:"",photo:"https://hautzendorfer.lima-city.de/Stuhleck/images/IMG_9879.jpg",wind:["SO","S","SW"],id:"11"},
+        {name:"Wiener Hütte",location:"https://maps.app.goo.gl/51FdukWReyfFydhi8",parking:"https://maps.app.goo.gl/igriU9PuRYUUj8ER9",weather:"",notes:"",photo:"https://vcdn.bergfex.at/images/resized/profiles/detail/461/4b82ad98bcd35379750d3a0b288fb461.jpg?1620128313",wind:["N","NO","O"],id:"12"},
+        {name:"Tulbing",location:"https://goo.gl/maps/voDebAT-KWoYissaAES9",parking:"https://goo.gl/maps/6TMHHuzNWjHHszDv5",weather:"",notes:"Betrieb unter der Woche ab 16h, Di verboten, ab Fr 14h",photo:"http://www.tulbingerkogel.at/wp-content/uploads/2018/10/outdoor_site.jpg",wind:["N","NO","NW"],id:"13"}
     ];
 
     var winds = ["N","NO","O","SO","S","SW","W","NW"];
@@ -154,6 +156,7 @@
             html += '<div class="card-body"><h3 class="card-title">' + a.name + '</h3>';
             html += '<a href="' + a.location + '" target="_blank" class="card-link">📍 Standort</a>';
             if (a.parking) html += '<a href="' + a.parking + '" target="_blank" class="card-link">🚗 Parkplatz</a>';
+            if (a.weather) html += '<a href="' + a.weather + '" target="_blank" class="card-link">🌤️ Lokales Wetter</a>';
             html += '<div class="wind-tags">';
             for (var j = 0; j < a.wind.length; j++) {
                 html += '<span class="wind-tag">' + a.wind[j] + '</span>';
@@ -175,6 +178,7 @@
         document.getElementById("name").value = "";
         document.getElementById("location").value = "";
         document.getElementById("parking").value = "";
+        document.getElementById("weather").value = "";
         document.getElementById("notes").value = "";
         document.getElementById("photo").value = "";
         
@@ -198,6 +202,7 @@
                 document.getElementById("name").value = data[i].name;
                 document.getElementById("location").value = data[i].location;
                 document.getElementById("parking").value = data[i].parking || "";
+                document.getElementById("weather").value = data[i].weather || "";
                 document.getElementById("notes").value = data[i].notes || "";
                 document.getElementById("photo").value = data[i].photo || "";
                 
@@ -217,6 +222,7 @@
         var name = document.getElementById("name").value.trim();
         var location = document.getElementById("location").value.trim();
         var parking = document.getElementById("parking").value.trim();
+        var weather = document.getElementById("weather").value.trim();
         var notes = document.getElementById("notes").value.trim();
         var photo = document.getElementById("photo").value.trim();
         
@@ -233,7 +239,7 @@
             return;
         }
         
-        var item = {name: name, location: location, parking: parking, notes: notes, photo: photo, wind: wind};
+        var item = {name: name, location: location, parking: parking, weather: weather, notes: notes, photo: photo, wind: wind};
         
         if (editId) {
             for (var i = 0; i < data.length; i++) {
